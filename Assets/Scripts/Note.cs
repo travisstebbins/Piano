@@ -15,6 +15,7 @@ public class Note : MonoBehaviour
     public string noteName { get { return m_noteName; } }
     public int noteIndex { get { return m_noteIndex; } }
     public float noteTime { get { return m_noteTime; } }
+    public Staff staff { get { return transform.parent.parent.GetComponent<Staff>(); } }
 
     // CLASS FUNCTIONS
     public void initialize(int num, string name, int index, float time)
@@ -30,7 +31,7 @@ public class Note : MonoBehaviour
         GetComponentInChildren<Image>().color = Color.green;
     }
 
-    public string ToString()
+    public override string ToString()
     {
         return noteIndex + ": " + noteNumber + " (" + noteName + "), " + noteTime;
     }

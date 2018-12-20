@@ -54,16 +54,12 @@ public class MusicSheet : MonoBehaviour
             currentNotes.Add(notes[currentNoteIndex]);
             currentNoteIndex++;
         }
-        RectTransform rt = transform.parent.GetComponent<RectTransform>();
-        rt.sizeDelta = new Vector2(rt.sizeDelta.x, staffs[0].GetComponent<RectTransform>().rect.height * staffs.Length);
-        //r.height = staffs[0].GetComponent<RectTransform>().rect.height * staffs.Length;
-        //GetComponent<RectTransform>().rect = r;
-        //GetComponent<RectTransform>().rect.height = staffs[0].GetComponent<RectTransform>().rect.height * staffs.Length;
+        RectTransform rt = GetComponent<RectTransform>();
+        rt.sizeDelta = new Vector2(rt.sizeDelta.x, staffs[0].GetComponent<RectTransform>().rect.height * (staffs.Length + 0.5f));
     }
 
     public void advance()
     {
-        Debug.Log("music sheet advance");
         foreach(Note n in currentNotes)
         {
             n.complete();
@@ -75,6 +71,27 @@ public class MusicSheet : MonoBehaviour
             currentNotes.Add(notes[currentNoteIndex]);
             currentNoteIndex++;
         }
+        string s = "";
+        foreach (Note n in currentNotes)
+        {
+            s += n.noteNumber + ", ";
+        }
+        if (currentNotes[0].staff.staffPair.transform.localPosition.y < 0)
+        {
+            Debug.Log("scrolling music");
+            transform.localPosition = new Vector2(transform.transform.localPosition.x,
+            /*-currentNotes[0].staff.staffPair.transform.position.y*/ -currentNotes[0].staff.staffPair.transform.localPosition.y);
+        }
+    }
+
+    StaffPair getStaffAtTime(float time)
+    {
+        int index = 0;
+        while (staffs[index].startTime + StaffPair.staffLength < time)
+        {
+            index++;
+        }
+        return staffs[index];
     }
 
     // UNITY FUNCTIONS

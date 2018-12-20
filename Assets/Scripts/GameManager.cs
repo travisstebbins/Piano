@@ -34,8 +34,6 @@ public class GameManager : MonoBehaviour
             bool allNotesPressed = true;
             foreach(Note n in MusicSheet.instance.currentNotes)
             {
-                Debug.Log("current notes: " + n.noteNumber);
-                Debug.Log("is note " + n.noteNumber + " down? " + MidiMaster.GetKey(n.noteNumber));
                 if (Mathf.Abs(MidiMaster.GetKey(n.noteNumber)) < float.Epsilon)
                 {
                     allNotesPressed = false;
