@@ -64,5 +64,7 @@
     <string>Three Instrument Test</string>
     <string>To Make the End of Battle</string>
     <string>beethoven_fur_elise</string>
+    <string>elise</string>
+    <string>mond_1</string>
   </MidiFiles>
 </MidiSet>

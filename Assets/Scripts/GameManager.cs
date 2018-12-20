@@ -55,7 +55,7 @@ public class GameManager : MonoBehaviour
     // UNITY FUNCTIONS
     void Start()
     {
-        MidiReader.instance.readMidiFile("beethoven_fur_elise");
+        MidiReader.instance.readMidiFile("mond_1");
     }
 
     void Awake()

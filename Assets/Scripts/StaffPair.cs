@@ -11,7 +11,7 @@ public class StaffPair : MonoBehaviour
     Staff m_bassStaff;
 
     // CLASS VARIABLES
-    public static int staffLength = 9;
+    public static float staffLength = 3.7f;
     public float startTime { get; set; }
     public Staff trebleStaff { get { return m_trebleStaff; } }
     public Staff bassStaff { get { return m_bassStaff; } }

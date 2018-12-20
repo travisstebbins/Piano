@@ -5,6 +5,12 @@ using UnityEngine.UI;
 
 public class Note : MonoBehaviour
 {
+    // SERIALIZEFIELD VARIABLES
+    [SerializeField]
+    Image accidental;
+    [SerializeField]
+    Image ledgerLine;
+
     // CLASS VARIABLES
     int m_noteNumber;
     string m_noteName;
@@ -24,6 +30,26 @@ public class Note : MonoBehaviour
         m_noteName = name;
         m_noteIndex = index;
         m_noteTime = time;
+        if (name.Contains("#"))
+        {
+            accidental.gameObject.SetActive(true);
+        }
+        else
+        {
+            accidental.gameObject.SetActive(false);
+        }
+        if (staff == staff.staffPair.trebleStaff && (num >= 81 || num <= 60))
+        {
+            ledgerLine.gameObject.SetActive(true);
+        }
+        else if (staff == staff.staffPair.bassStaff && (num <= 40 || num >= 48))
+        {
+            ledgerLine.gameObject.SetActive(true);
+        }
+        else
+        {
+            ledgerLine.gameObject.SetActive(false);
+        }
     }
 
     public void complete()

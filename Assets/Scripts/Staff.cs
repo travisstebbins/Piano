@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using MidiPlayerTK;
+using NAudio.Midi;
 
 public class Staff : MonoBehaviour
 {
@@ -35,7 +37,7 @@ public class Staff : MonoBehaviour
         Note note = Instantiate(notePrefab, noteHolder.transform).GetComponent<Note>();
         note.initialize(number, name, index, time);
         note.transform.localPosition = new Vector2(-GetComponent<RectTransform>().rect.width * 0.5f +
-        (time - staffPair.startTime) * 100.0f - 400.0f, getNoteYPosition(note));
+        (time - staffPair.startTime) * MidiReader.instance.GetComponent<MidiLoad>().midifile.DeltaTicksPerQuarterNote * 0.5f - 400.0f, getNoteYPosition(note));
         note.GetComponentInChildren<Text>().text = note.noteName;
         MusicSheet.instance.notes.Add(note);
     }
