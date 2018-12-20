@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -54,6 +55,14 @@ public class MusicSheet : MonoBehaviour
             currentNotes.Add(notes[currentNoteIndex]);
             currentNoteIndex++;
         }
+        foreach (Note n in currentNotes)
+        {
+            PianoUI.instance.highlightKey(n.noteNumber);
+        }
+
+        transform.localPosition = new Vector2(transform.transform.localPosition.x,
+            -currentNotes[0].staff.staffPair.transform.localPosition.y);
+
         RectTransform rt = GetComponent<RectTransform>();
         rt.sizeDelta = new Vector2(rt.sizeDelta.x, staffs[0].GetComponent<RectTransform>().rect.height * (staffs.Length + 0.5f));
     }
@@ -63,6 +72,7 @@ public class MusicSheet : MonoBehaviour
         foreach(Note n in currentNotes)
         {
             n.complete();
+            PianoUI.instance.unhighlightKey(n.noteNumber);
         }
         currentNotes.Clear();
         currentNotes.Add(notes[currentNoteIndex++]);
@@ -71,17 +81,12 @@ public class MusicSheet : MonoBehaviour
             currentNotes.Add(notes[currentNoteIndex]);
             currentNoteIndex++;
         }
-        string s = "";
         foreach (Note n in currentNotes)
         {
-            s += n.noteNumber + ", ";
+            PianoUI.instance.highlightKey(n.noteNumber);
         }
-        if (currentNotes[0].staff.staffPair.transform.localPosition.y < 0)
-        {
-            Debug.Log("scrolling music");
-            transform.localPosition = new Vector2(transform.transform.localPosition.x,
-            /*-currentNotes[0].staff.staffPair.transform.position.y*/ -currentNotes[0].staff.staffPair.transform.localPosition.y);
-        }
+        transform.localPosition = new Vector2(transform.transform.localPosition.x,
+            -currentNotes[0].staff.staffPair.transform.localPosition.y);
     }
 
     StaffPair getStaffAtTime(float time)
@@ -92,6 +97,13 @@ public class MusicSheet : MonoBehaviour
             index++;
         }
         return staffs[index];
+    }
+
+    private static readonly string[] NoteNames = new string[] { "C", "C#", "D", "D#", "E", "F", "F#", "G", "G#", "A", "A#", "B" };
+    public static string getNoteNameByNumber(int number)
+    {
+        int octave = Mathf.Max(0, (number / 12) - 1);
+        return String.Format("{0}{1}", NoteNames[number % 12], octave);
     }
 
     // UNITY FUNCTIONS

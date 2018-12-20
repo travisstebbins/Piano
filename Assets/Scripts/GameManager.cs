@@ -21,13 +21,14 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    // SERIALIZE FIELD VARIABLES
+    // SERIALIZEFIELD VARIABLES
     [SerializeField]
     MusicSheet musicSheet;
 
     // CLASS FUNCTIONS
     void onNoteDown(MidiChannel channel, int note, float velocity)
     {
+        PianoUI.instance.pressKey(note);
         if (Mathf.Abs(velocity) > float.Epsilon)
         {
             Debug.Log(note);
@@ -48,7 +49,7 @@ public class GameManager : MonoBehaviour
 
     void onNoteUp(MidiChannel channel, int note)
     {
-
+        PianoUI.instance.unpressKey(note);
     }
 
     // UNITY FUNCTIONS
